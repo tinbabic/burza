@@ -10,7 +10,7 @@ class SaldosController extends BaseController {
     public function showSaldos(){
         $se = new Service();
         
-        //iz sessiona nekak izvuc id usera <--------------
+
         if(isset($_SESSION["user_id"])) {
             $user_id = $_SESSION["user_id"];
             $userStock = $se->getSaldosByUserId($user_id);

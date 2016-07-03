@@ -47,6 +47,7 @@ class AuthsController extends BaseController {
         else
         {
             $_SESSION['username'] = $_POST['username'];
+            $_SESSION['current_user_id'] = $user['id'];
             $this->index();
 
         }
@@ -109,6 +110,7 @@ class AuthsController extends BaseController {
     }
     public function logout() {
         unset($_SESSION['username']);
+        unset($_SESSION['current_user_id']);
         $this->index();
     }
 }

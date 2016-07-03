@@ -15,9 +15,6 @@
 <label for="pass">Password:</label>
 <input type="password" id="pass" name="password">
 <br/>
-<label for="email">Email:</label>
-<input type="text" id="email" name="email">
-<br/>
 <input type="submit" name="login" value="Login">
 </form>
 Ako nemate racun, <a href="<?php echo __SITE_URL . '/index.php?rt=auths/validate_register'?>">registrirajte</a> se.

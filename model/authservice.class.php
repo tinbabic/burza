@@ -5,7 +5,7 @@ class AuthService {
 
         try
         {
-            $vt = $db->prepare('SELECT username, password, has_registered FROM users WHERE username=:username');
+            $vt = $db->prepare('SELECT id, username, password, has_registered FROM users WHERE username=:username');
             $vt->execute(array('username' => $_POST['username']));
         }
         catch(PDOException $e)
