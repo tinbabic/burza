@@ -12,7 +12,7 @@ Skripte za updejt baze i punjenje se mogu pokrenuti u /app/boot/ime.php
 
 Svaki kontroller treba se napraviti kako su vec ovi gotovi, dakle svaki mora imati barem index() funkciju jer je to default koji se poziva kad se napise /controller.
 
-Kako saljemo podatke do ''vidljivih stranica (viewova)'' -> u pripadnoj funkciji controllera idemo : $this->registry->template->ime_varijable_vrijednost;
+Kako saljemo podatke do ''vidljivih stranica (viewova)'' -> u pripadnoj funkciji controllera idemo : $this->registry->template->ime_varijable->vrijednost;
 Zatim ako zelimo ucitati taj trazeni view idemo $this->registry->template->show('ime_viewa_bez_phpa');
 
 Sada je u tom zadanom viewu moguce pristupiti svim varijablama odozgora kao da su vec definirane npr $ime_varijable = vrijednost;
