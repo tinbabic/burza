@@ -3,26 +3,22 @@
 
 class SaldosController extends BaseController {
     public function index() {
-    
-    }
-    
-    //ispisuje sve dionice koje trenutni korisnik posjeduje
-    public function showSaldos(){
         $se = new Service();
-        
-
-        if(isset($_SESSION["user_id"])) {
-            $user_id = $_SESSION["user_id"];
-            $userStock = $se->getSaldosByUserId($user_id);
-        
-            //pozovi view skriptu za ispis dionica
-            require '../View/userSaldo.php';
+        $user_id = $_SESSION['current_user_id'];
+        $userStocks = $se->getSaldosByUserId($user_id);
+        $firm_names = array();
+        foreach($userStocks as $user_stock) {
+            //da bi u view-u imali imena firmi jer je to prirodnije za pokazat
+            //ovdje spremam u polje p[stock_id]=ime_firme
+            $stock = $se->getStocksById($user_stock->stock_id);
+            $firm = $se->getFirmsById($stock->firm_id);
+            $firm_names[$user_stock->stock_id] = $firm->name;
         }
-        else {
-            //ništa ne radi ili ispiši neku poruku access denied/need to login
-            require '../View/accessDenied.php';
-        }
+        $this->registry->template->userStocks = $userStocks;
+        $this->registry->template->firm_names = $firm_names;
+        $this->registry->template->show('saldos_index');
     }
+
     
     //zapisuje nove dionice ili modificira postojeće
     public function inputSaldos(){
