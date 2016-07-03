@@ -1,4 +1,12 @@
 <?php
+/*
+ * VAŽNO! stock_id bi trebao ostat fiksan za jednog usera i jedan stock u ovoj tablici, i samo mu updejtat broj
+ * programski rijesiti....bazno rijesit..nesto bla
+ *
+ * ILI da update daily jednostavno updejta i sve brojeve salda na najnovije stock ideve .. za razmislit sutra
+ */
+
+
 
 
 class SaldosController extends BaseController {

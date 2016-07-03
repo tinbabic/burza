@@ -3,7 +3,20 @@
 
 class StocksController extends BaseController {
     public function index() {
-    
+        $se = new Service();
+        $firms = $se->getAllFirms();
+        $firms_and_stocks = array();
+        foreach($firms as $firm) {
+            //za svaku firmu nadjemo najnoviju dionicu
+            //zatim u element kao array spremimo firmu i pripadnu dionicu pod isti key
+            //firms_and_stocks sada za svaki key ima par firme i stocka, za ispis
+            $latest_stock = $se->getStocksByFirmIdLastest($firm->id);
+            $element['firm'] = $firm;
+            $element['stock'] = $latest_stock;
+            $firms_and_stocks[] = $element;
+        }
+        $this->registry->template->firms_and_stocks = $firms_and_stocks;
+        $this->registry->template->show('stocks_index');
     }
     //ispisuje povijest dionice
     public function showPriceHistory(){
