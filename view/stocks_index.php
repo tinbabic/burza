@@ -17,6 +17,7 @@ $i = 0;
         <th>Ime Firme</th>
         <th>Datum</th>
         <th>Cijena</th>
+        <th>Trend</th>
         <th>Količina</th>
         <th>Dividenda</th>
         <th>Akcije</th>
@@ -28,6 +29,7 @@ foreach($firms_and_stocks as $element) {
     <td>' . $element['firm']->name . '</td>
     <td>' . $element['stock']->date . '</td>
     <td>' .$element['stock']->price . '</td>
+    <td>' .$element['trend'] . '</td>
     <td>' . $element['stock']->volume . '</td>
     <td>' . $element['stock']->dividend .'</td>
     <td>Povijest Kupi Prodaj</td></tr>' ?>

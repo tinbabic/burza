@@ -201,6 +201,22 @@ class Service {
         }
     }
     
+    function getStocksByFirmId2ndLastest($firm_id){
+        try{
+            $db = DB::getConnection();
+            $st = $db->prepare( 'SELECT id, firm_id, date, price, volume, dividend FROM stocks WHERE firm_id=:firm_id ORDER BY date DESC LIMIT 2,1' );
+            $st->execute( array( 'firm_id' => $firm_id ) );
+	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+	$row = $st->fetch();
+	if( $row === false ){
+            return null;
+        }
+        else{
+            return new Stock( $row['id'], $row['firm_id'], $row['date'], $row['price'], $row['volume'], $row['dividend'] );
+        }
+    }
+    
     //---------------saldos--------------------------
     function getAllSaldos(){
         try{
