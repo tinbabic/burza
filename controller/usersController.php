@@ -15,8 +15,7 @@ class UsersController extends BaseController {
         //suma vrijednosti svhih dionica
         $stockSum = 0;
         foreach ($userSaldos as $saldo) {
-            $stock = $se->getStocksById($saldo->stock_id);
-            $lastestStock = $se->getStocksByFirmIdLastest($stock->firm_id);
+            $lastestStock = $se->getStocksByFirmIdLastest($saldo->firm_id);
             $stockSum = $stockSum + $lastestStock->price * $saldo->total_amount;
         }
 
@@ -46,9 +45,7 @@ class UsersController extends BaseController {
             
             //vrijednost dionica
             foreach ($userSaldo as $saldo){
-                $idStock = $saldo->stock_id;
-                $temp = $se->getStocksById($idStock);
-                $firm = $temp->firm_id;
+                $firm = $saldo->firm_id;
                 $stock = $se->getStocksByFirmIdLastest($firm);
                 $userNetWorth = $userNetWorth + $stock->price * $saldo->total_amount;
             }
