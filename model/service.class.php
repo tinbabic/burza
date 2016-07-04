@@ -298,12 +298,29 @@ class Service {
     
     function insertSaldo($saldo){
         if(is_a($saldo, 'Saldo')){
+            //prebroji usere sa username
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("INSERT INTO saldos (user_id, firm_id, total_amount) "
-                        . "VALUES (".$saldo['user_id'].",".$saldo['firm_id'].",".$saldo['total_amount'].")");
+                $st = $db->prepare("SELECT EXISTS (SELECT * FROM saldos WHERE user_id = '".$saldo['user_id']."'"
+                        . " AND firm_id = '".$saldo['firm_id']."')");
                 $st->execute();
-            }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            } catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            
+            if($st->fetch() == 0){
+                try{
+                    $db = DB::getConnection();
+                    $st = $db->prepare("INSERT INTO saldos (user_id, firm_id, total_amount) "
+                            . "VALUES (".$saldo['user_id'].",".$saldo['firm_id'].",".$saldo['total_amount'].")");
+                    $st->execute();
+                }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            } else{
+                try{
+                    $db = DB::getConnection();
+                    $st = $db->prepare("UPDATE saldo SET user_ud='".$saldo['user_id']."', firm_id='".$saldo['firm_id']."', total_amount='".$saldo['total_amount'].""
+                            . "WHERE user_id = '".$saldo['user_id']."' AND firm_id = '".$saldo['firm_id']."'");
+                    $st->execute();
+                }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            }
         }else{
             exit('expected variable is not Saldo');
         }
