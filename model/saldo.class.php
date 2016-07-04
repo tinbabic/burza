@@ -2,12 +2,12 @@
 
 
 class Saldo {
-    protected $id, $user_id, $stock_id, $total_amount;
+    protected $id, $user_id, $firm_id, $total_amount;
 
-    function __construct($id, $user_id, $stock_id, $total_amount ){
+    function __construct($id, $user_id, $firm_id, $total_amount ){
 		$this->id = $id;
 		$this->user_id = $user_id;
-                $this->stock_id = $stock_id;
+                $this->firm_id = $firm_id;
                 $this->total_amount = $total_amount;
     }
     function __get( $prop ) { return $this->$prop; }

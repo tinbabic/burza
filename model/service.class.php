@@ -221,13 +221,13 @@ class Service {
     function getAllSaldos(){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, user_id, stock_id, total_amount FROM saldos' );
+            $st = $db->prepare( 'SELECT id, user_id, firm_id, total_amount FROM saldos' );
             $st->execute();
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 	$arr = array();
         while($row=$st->fetch()){
-            $arr[] = new Saldo( $row['id'], $row['user_id'], $row['stock_id'], $row['total_amount'] );
+            $arr[] = new Saldo( $row['id'], $row['user_id'], $row['firm_id'], $row['total_amount'] );
         }
         
         return $arr;
@@ -236,7 +236,7 @@ class Service {
     function getSaldosById($id){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, user_id, stock_id, total_amount FROM saldos WHERE id=:id' );
+            $st = $db->prepare( 'SELECT id, user_id, firm_id, total_amount FROM saldos WHERE id=:id' );
             $st->execute( array( 'id' => $id ) );
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
         
@@ -245,35 +245,35 @@ class Service {
             return null;
         }
         else{
-            return new Saldo( $row['id'], $row['user_id'], $row['stock_id'], $row['total_amount'] );
+            return new Saldo( $row['id'], $row['user_id'], $row['firm_id'], $row['total_amount'] );
         }
     }
     
     function getSaldosByUserId($user_id){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, user_id, stock_id, total_amount FROM saldos WHERE user_id=:user_id ORDER BY total_amount' );
+            $st = $db->prepare( 'SELECT id, user_id, firm_id, total_amount FROM saldos WHERE user_id=:user_id ORDER BY total_amount' );
             $st->execute( array( 'user_id' => $user_id ) );
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 	$arr = array();
         while($row=$st->fetch()){
-            $arr[] = new Saldo( $row['id'], $row['user_id'], $row['stock_id'], $row['total_amount'] );
+            $arr[] = new Saldo( $row['id'], $row['user_id'], $row['firm_id'], $row['total_amount'] );
         }
         
         return $arr;
     }
     
-    function getSaldosByStockId($stock_id){
+    function getSaldosByFirmId($firm_id){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, user_id, stock_id, total_amount FROM saldos WHERE stock_id=:stock_id ORDER BY total_amount' );
-            $st->execute( array( 'stock_id' => $stock_id ) );
+            $st = $db->prepare( 'SELECT id, user_id, firm_id, total_amount FROM saldos WHERE firm_id=:firm_id ORDER BY total_amount' );
+            $st->execute( array( 'firm_id' => $firm_id ) );
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 	$arr = array();
         while($row=$st->fetch()){
-            $arr[] = new Saldo( $row['id'], $row['user_id'], $row['stock_id'], $row['total_amount'] );
+            $arr[] = new Saldo( $row['id'], $row['user_id'], $row['firm_id'], $row['total_amount'] );
         }
         
         return $arr;
@@ -283,8 +283,8 @@ class Service {
         if(is_a($saldo, 'Saldo')){
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("INSERT INTO saldos (user_id, stock_id, total_amount) "
-                        . "VALUES (".$saldo['user_id'].",".$saldo['stock_id'].",".$saldo['total_amount'].")");
+                $st = $db->prepare("INSERT INTO saldos (user_id, firm_id, total_amount) "
+                        . "VALUES (".$saldo['user_id'].",".$saldo['firm_id'].",".$saldo['total_amount'].")");
                 $st->execute();
             }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
         }else{

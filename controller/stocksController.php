@@ -36,6 +36,21 @@ class StocksController extends BaseController {
             require '../View/accessDenied.php';
         }
     }
+    public function kupi() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $amount = $_POST['amount'];
+
+
+
+        } else {
+            $stock_id = $_GET['stock_id'];
+            $firm_name = $_GET['firm_name'];
+            $this->registry->template->stock_id = $stock_id;
+            $this->registry->template->firm_name = $firm_name;
+            $this->registry->template->show('stocks_kupi');
+        }
+    }
 }
+
 
 ?>
