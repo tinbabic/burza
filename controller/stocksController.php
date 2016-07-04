@@ -59,8 +59,26 @@ class StocksController extends BaseController {
             if($amount*$price <= $money) {
                 $money -= $amount*$price;
                 $user->money = $money;
-
-
+                $transaction = new Transaction(NULL,$stock->id,$user_id,$amount,1);
+                $saldos = $se->getSaldosByUserId($user_id);
+                $found_saldo = NULL;
+                foreach($saldos as $saldo) {
+                    if($saldo->firm_id == $firm_id) {
+                        $found_saldo = $saldo;
+                        break;
+                    }
+                }
+                if($found_saldo !== NULL) {
+                    $found_saldo->total_amount += $amount;
+                    $se->insertSaldo($found_saldo);
+                } else {
+                    $saldo = new Saldo(NULL,$user_id,$firm_id,$amount);
+                    $se->insertSaldo($saldo);
+                }
+                $se->insertUser($user);
+                $se->insertTransaction($transaction);
+                $this->index();
+                return;
             } else {
                 $this->registry->template->error_msg = "You don't have enough funds!";
                 $this->registry->template->firm_id = $firm_id;
@@ -75,6 +93,65 @@ class StocksController extends BaseController {
             $this->registry->template->firm_id = $firm_id;
             $this->registry->template->firm_name = $firm_name;
             $this->registry->template->show('stocks_kupi');
+        }
+    }
+    public function prodaj() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $amount = $_POST['amount'];
+            $se = new Service();
+            $firm_id = $_POST['firm_id'];
+            $stock = $se->getStocksByFirmIdLastest($firm_id);
+            $price = $stock->price;
+            $user_id = $_SESSION['current_user_id'];
+            $user = $se->getUsersById($user_id);
+            $money = $user->money;
+            //postoji li saldo za trenutnu dionicu
+            $saldos = $se->getSaldosByUserId($user_id);
+            $found_saldo = NULL;
+            foreach ($saldos as $saldo) {
+                if ($saldo->firm_id == $firm_id) {
+                    $found_saldo = $saldo;
+                    break;
+                }
+            }
+            if ($found_saldo !== NULL) {
+                if ($found_saldo->total_amount >= $amount) {
+
+                    $money += $amount * $price;
+                    $user->money = $money;
+                    $transaction = new Transaction(NULL, $stock->id, $user_id, $amount, 0);
+                    $found_saldo->total_amount -= $amount;
+                    $se->insertSaldo($found_saldo);
+                    $se->insertUser($user);
+                    $se->insertTransaction($transaction);
+                    $this->index();
+
+                } else {
+                    $this->registry->template->error_msg = "You don't have enough funds!";
+                    $this->registry->template->firm_id = $firm_id;
+                    $firm = $se->getFirmsById($firm_id);
+
+                    $this->registry->template->firm_name = $firm->name;
+                    $this->registry->template->show('stocks_prodaj');
+                }
+            } else {
+
+                if ($amount != 0) {
+                    //nema dovoljno dionica..
+                    $this->registry->template->error_msg = "You don't have enough stocks!";
+                    $this->registry->template->firm_id = $firm_id;
+                    $firm = $se->getFirmsById($firm_id);
+
+                    $this->registry->template->firm_name = $firm->name;
+                    $this->registry->template->show('stocks_prodaj');
+                }
+            }
+        } else {
+            $firm_id = $_GET['firm_id'];
+            $firm_name = $_GET['firm_name'];
+            $this->registry->template->firm_id = $firm_id;
+            $this->registry->template->firm_name = $firm_name;
+            $this->registry->template->show('stocks_prodaj');
         }
     }
 }

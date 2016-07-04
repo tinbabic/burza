@@ -38,7 +38,7 @@ class Service {
             //prebroji usere sa username
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("SELECT EXISTS (SELECT * FROM users WHERE username = '".$user['username']."')");
+                $st = $db->prepare("SELECT EXISTS (SELECT * FROM users WHERE username = '".$user->username."')");
                 $st->execute();
             } catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
             
@@ -46,15 +46,15 @@ class Service {
             if($st->fetch() == 0){
                 try{
                     $db = DB::getConnection();
-                    $st = $db->prepare("INSERT INTO user (id, username, email, money, has_registered) "
-                            . "VALUES (".$user['id'].",".$user['username'].",".$user['email'].",".$user['money'].", 1)");
+                    $st = $db->prepare("INSERT INTO users (id, username, email, money, has_registered) "
+                            . "VALUES (".$user->id.",".$user->username.",".$user->email.",".$user->money.", 1)");
                     $st->execute();
                 }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
             } else{ //inace modificiraj postojeci
                 try{
                     $db = DB::getConnection();
-                    $st = $db->prepare("UPDATE user SET money='".$user['money']."', email='".$user['email']."'"
-                            . "WHERE username='".$user['username']."'");
+                    $st = $db->prepare("UPDATE users SET money='".$user->money."', email='".$user->email."'"
+                            . "WHERE username='".$user->username."'");
                     $st->execute();
                 }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
             }
@@ -162,7 +162,7 @@ class Service {
             try{
                 $db = DB::getConnection();
                 $st = $db->prepare("INSERT INTO transactions (stock_id, user_id, amount, buying) "
-                        . "VALUES (".$transaction['stock_id'].",".$transaction['user_id'].",".$transaction['amount'].",".$transaction['buying'].")");
+                        . "VALUES (".$transaction->stock_id.",".$transaction->user_id.",".$transaction->amount.",".$transaction->buying.")");
                 $st->execute();
             }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
         }else{
@@ -301,8 +301,8 @@ class Service {
             //prebroji usere sa username
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("SELECT EXISTS (SELECT * FROM saldos WHERE user_id = '".$saldo['user_id']."'"
-                        . " AND firm_id = '".$saldo['firm_id']."')");
+                $st = $db->prepare("SELECT EXISTS (SELECT * FROM saldos WHERE user_id = '".$saldo->user_id."'"
+                        . " AND firm_id = '".$saldo->firm_id."')");
                 $st->execute();
             } catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
             
@@ -310,16 +310,16 @@ class Service {
                 try{
                     $db = DB::getConnection();
                     $st = $db->prepare("INSERT INTO saldos (user_id, firm_id, total_amount) "
-                            . "VALUES (".$saldo['user_id'].",".$saldo['firm_id'].",".$saldo['total_amount'].")");
+                            . "VALUES (".$saldo->user_id.",".$saldo->firm_id.",".$saldo->total_amount.")");
                     $st->execute();
                 }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
             } else{
                 try{
                     $db = DB::getConnection();
-                    $st = $db->prepare("UPDATE saldo SET user_ud='".$saldo['user_id']."', firm_id='".$saldo['firm_id']."', total_amount='".$saldo['total_amount'].""
-                            . "WHERE user_id = '".$saldo['user_id']."' AND firm_id = '".$saldo['firm_id']."'");
+                    $st = $db->prepare("UPDATE saldos SET user_id='".$saldo->user_id."', firm_id='".$saldo->firm_id."', total_amount='".$saldo->total_amount."'
+                            WHERE user_id = '".$saldo->user_id."' AND firm_id = '".$saldo->firm_id."'");
                     $st->execute();
-                }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+                }catch( PDOException $e ) { exit( 'PDO1111 error ' . $e->getMessage() ); }
             }
         }else{
             exit('expected variable is not Saldo');
