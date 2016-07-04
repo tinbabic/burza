@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Dionice</title>
-</head>
-<body>
+<?php require_once '_header.php'; ?>
+
     <h2>Korisnik <?=$_SESSION['username']?></h2>
     <table>
         <tr>
@@ -14,5 +9,5 @@
            
         </tr>
     </table>
-</body>
-</html>
+    
+<?php require_once '_footer.php'; ?>

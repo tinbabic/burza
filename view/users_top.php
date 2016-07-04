@@ -1,12 +1,7 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Transakcije</title>
-</head>
+<?php require_once '_header.php'; ?>
 
-<body>
+
 <h2>Popis najuspješnijih korisnika</h2>
 
 <table>
@@ -28,6 +23,4 @@ foreach($userList as $user => $netWorth) {
 </table>
 
 
-</body>
-
-</html>
+<?php require_once '_footer.php'; ?>
