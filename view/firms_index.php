@@ -13,7 +13,7 @@ $i = 0;
 ?>
 <table>
     <tr>
-        <th>Broj</th>
+        <th>#</th>
         <th>Simbol</th>
         <th>Ime</th>
     </tr>
