@@ -49,13 +49,30 @@ class StocksController extends BaseController {
     public function kupi() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $amount = $_POST['amount'];
+            $se = new Service();
+            $firm_id = $_POST['firm_id'];
+            $stock = $se->getStocksByFirmIdLastest($firm_id);
+            $price = $stock->price;
+            $user_id = $_SESSION['current_user_id'];
+            $user = $se->getUsersById($user_id);
+            $money = $user->money;
+            if($amount*$price <= $money) {
+                $money -= $amount*$price;
+                $user->money = $money;
 
 
+            } else {
+                $this->registry->template->error_msg = "You don't have enough funds!";
+                $this->registry->template->firm_id = $firm_id;
+                $firm = $se->getFirmsById($firm_id);
 
+                $this->registry->template->firm_name = $firm->name;
+                $this->registry->template->show('stocks_kupi');
+            }
         } else {
-            $stock_id = $_GET['stock_id'];
+            $firm_id = $_GET['firm_id'];
             $firm_name = $_GET['firm_name'];
-            $this->registry->template->stock_id = $stock_id;
+            $this->registry->template->firm_id = $firm_id;
             $this->registry->template->firm_name = $firm_name;
             $this->registry->template->show('stocks_kupi');
         }

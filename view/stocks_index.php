@@ -32,7 +32,7 @@ foreach($firms_and_stocks as $element) {
     <td>' .$element['trend'] . '</td>
     <td>' . $element['stock']->volume . '</td>
     <td>' . $element['stock']->dividend .'</td>
-    <td> Povijest <a href="' .  __SITE_URL  . '/index.php?rt=stocks/kupi&stock_id=' . $element['stock']->id .'&firm_name=' . $element['firm']->name .'">
+    <td> Povijest <a href="' .  __SITE_URL  . '/index.php?rt=stocks/kupi&firm_id=' . $element['firm']->id .'&firm_name=' . $element['firm']->name .'">
     Kupi</a> Prodaj</td></tr>' ?>
     <?php
     }
