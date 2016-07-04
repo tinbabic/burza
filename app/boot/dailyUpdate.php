@@ -42,15 +42,13 @@ foreach($dividendArr as $firm => $dividend){
     $se = new Service();
     $saldoArr = $se->getAllSaldos();
     foreach($saldoArr as $saldo){
-        //iz saldos stock_id
-        $stockId = $saldo['stock_id'];
-        //iz stocks(stock_id) firm_id
-        $stock = $se->getStocksById($stockId);
+        //iz saldos firm id
+        $firmId = $saldo['firm_id'];
         //provjeri firm_id==firm
-        if($stock['firm_id'] == $firm){
+        if($firmId == $firm){
             //u users(user_id) money+=dividend*amount i zapis u users
-            $user = $se->getUsersById($stock['user_id']);
-            $user['money'] += $dividend * $saldo['total'];
+            $user = $se->getUsersById($saldo['user_id']);
+            $user['money'] += $dividend * $saldo['total_amount'];
             $se->insertUser($user);
         }
         
