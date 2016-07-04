@@ -3,6 +3,8 @@
 //spoji se na bazu
 require_once '../../model/db.class.php';
 
+require_once '../../model/service.class.php';
+
 $db = DB::getConnection();
     
 //po svim symbol iz tablice firme
@@ -22,7 +24,10 @@ foreach($symbolArr as $symbol){
     //echo '<br>name: '.$tmp['dataset']['name'].'<br>';
     //echo 'datum: '.$tmp['dataset']['data'][0][0].'<br>';
     
-    if($tmp['dataset']['data'][0][6]>0 && true){ //treba još provjeriti datum!!!!!!!!!!
+    $se = new Service();
+    $lastest = $se->getStocksByFirmIdLastest($symbol[1]);
+    
+    if($tmp['dataset']['data'][0][6]>0 && $tmp['dataset']['data'][0][0] != $lastest['date']){
         $dividendArr[$symbol[1]] = $tmp['dataset']['data'][0][6];
     }
     try{
@@ -35,7 +40,7 @@ foreach($symbolArr as $symbol){
     }catch( PDOException $e ) { echo 'Greška:' . $e->getMessage(); return; }
 }
 
-require_once '../../model/service.class.php';
+
 //isplata dividenda
 foreach($dividendArr as $firm => $dividend){
     //po svim saldos

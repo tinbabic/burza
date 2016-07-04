@@ -1,12 +1,4 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Firme</title>
-</head>
-
-<body>
+<?php require_once '_header.php'; ?>
 <h2>Popis Firmi</h2>
 <?php
 $i = 0;
@@ -29,6 +21,4 @@ foreach($firms as $firm) {
 </table>
 
 
-</body>
-
-</html>
+<?php require_once '_footer.php'; ?>

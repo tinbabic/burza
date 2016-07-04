@@ -1,12 +1,6 @@
+<?php require_once '_header.php'; ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Transakcije</title>
-</head>
 
-<body>
 <h2>Popis Transakcija za korisnika: <?=$_SESSION['username']?></h2>
 <?php
 $i = 0;
@@ -30,7 +24,4 @@ foreach($transactions as $transaction) {
     ?>
 </table>
 
-
-</body>
-
-</html>
+<?php require_once '_footer.php'; ?>

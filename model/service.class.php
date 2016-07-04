@@ -35,12 +35,29 @@ class Service {
     
     function insertUser($user){
         if(is_a($user, 'User')){
+            //prebroji usere sa username
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("INSERT INTO user (id, username, email, money) "
-                        . "VALUES (".$user['id'].",".$user['username'].",".$user['email'].",".$user['money'].")");
+                $st = $db->prepare("SELECT EXISTS (SELECT * FROM users WHERE username = '".$user['username']."')");
                 $st->execute();
-            }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            } catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            
+            //ako ne postoji taj user unesi novi
+            if($st->fetch() == 0){
+                try{
+                    $db = DB::getConnection();
+                    $st = $db->prepare("INSERT INTO user (id, username, email, money, has_registered) "
+                            . "VALUES (".$user['id'].",".$user['username'].",".$user['email'].",".$user['money'].", 1)");
+                    $st->execute();
+                }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            } else{ //inace modificiraj postojeci
+                try{
+                    $db = DB::getConnection();
+                    $st = $db->prepare("UPDATE user SET money='".$user['money']."', email='".$user['email']."'"
+                            . "WHERE username='".$user['username']."'");
+                    $st->execute();
+                }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            }
         }else{
             exit('expected variable is not User');
         }        

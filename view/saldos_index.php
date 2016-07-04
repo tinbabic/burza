@@ -1,12 +1,4 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Dionice</title>
-</head>
-
-<body>
+<?php require_once '_header.php'; ?>
 <h2>Popis Dionica za korisnika: <?=$_SESSION['username']?></h2>
 <?php
 $i = 0;
@@ -29,6 +21,4 @@ foreach($userStocks as $user_stock) {
 </table>
 
 
-</body>
-
-</html>
+<?php require_once '_footer.php'; ?>
