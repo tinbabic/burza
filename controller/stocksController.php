@@ -12,7 +12,7 @@ class StocksController extends BaseController {
             //firms_and_stocks sada za svaki key ima par firme i stocka, za ispis
             $latest_stock = $se->getStocksByFirmIdLastest($firm->id);
             $second = $se->getStocksByFirmId2ndLastest($firm->id);
-            $trend = $latest_stock->price < $second->price;
+            $trend = $latest_stock->price > $second->price ? 1 : 0;
             $element['firm'] = $firm;
             $element['stock'] = $latest_stock;
             $element['trend'] = $trend;
