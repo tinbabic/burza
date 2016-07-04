@@ -5,9 +5,6 @@
     <title>Dionice</title>
 </head>
 <body>
-    <?php
-        var_dump($money);
-    ?>
     <h2>Korisnik <?=$_SESSION['username']?></h2>
     <table>
         <tr>
