@@ -25,16 +25,26 @@ class StocksController extends BaseController {
     public function showPriceHistory(){
         $se = new Service();
         
-        //iz sessiona ili nećeg drugog čita o kojoj firmi se radi
-        if(true){
-            $firm_id = 1;
-        
-            $history = $se->getStocksByFirmId($firm_id);
-            //pozovi skriptu za ispis i/ili crtanje grafa
-            require '../View/priceHistory.php';
-        } else {
-            require '../View/accessDenied.php';
+        //$_GET['firm_id']
+        if(isset($_GET['firm_id'])){
+            $firm_id = $_GET['firm_id'];
+            //$firm_id = 9224;
+            
+            $firm = $se->getFirmsById($firm_id);
+            $name = $firm->name;
+
+            $arr = $se->getStocksByFirmId($firm_id);
+            $data = array();
+            foreach($arr as $stock){
+                $data[$stock->date] = array($stock->price, $stock->volume, $stock->dividend);
+            }
+
+            $this->registry->template->data = $data;
+            $this->registry->template->name = $name;
+
+            $this->registry->template->show('stock_history');
         }
+        
     }
 }
 
