@@ -1,6 +1,8 @@
 <?php
 
 class AuthsController extends BaseController {
+    //ako je ulogiran korisnik salje ga na popis dionica
+    //salje ga na login stranicu
     public function index() {
         if(isset($_SESSION['username'])) {
             header( 'Location: ' . __SITE_URL . '/index.php?rt=stocks' );
@@ -9,7 +11,10 @@ class AuthsController extends BaseController {
             $this->registry->template->show('auths_index');
         }
     }
-
+    //provjerava za unos iz forme je li dobro formatiran
+    //zatim provjerava postoji li vec user sa tim podacima koji je dobro izvrsio
+    //registraciju, ako postoji ok, ako ne javlja gresku
+    //na poslijetku provjerava je li password dobar i ako sve prodje, logira korisnika
     public function validate_login() {
         if(empty($_POST['username']) || empty($_POST['password']))
         {
@@ -52,7 +57,11 @@ class AuthsController extends BaseController {
 
         }
     }
-
+    //funkcija se poziva sa auth_register viewa kako bi procesirala
+    //podatke unesene u formu
+    //prvo provjerava format onesenih podataka i ako su dobri, provjerava ako postoji korinik sa tim podacima u bazi
+    //ako postoji, javlja da postoji i salje nazad na login.
+    //ako ne postoji, stvara jedinstveni niz za korisnika i posalje mu na mail link za registraciju te vraca na login
     public function validate_register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['email'])) {
@@ -72,7 +81,7 @@ class AuthsController extends BaseController {
                 $as = new AuthService();
                 if ($as->checkIfUsernameExists()) {
                     $this->registry->template->error_msg = 'There already exists a user with that username.';
-                    $this->registry->template->show('auths_register');
+                    $this->registry->template->show('auths_index');
                     return;
                 }
                 $reg_seq = '';
@@ -96,6 +105,8 @@ class AuthsController extends BaseController {
         }
         $this->registry->template->show('auths_register');
     }
+    //obradjuje get zahtjeve iz registracijskih mailova koje
+    //korisnici salju tako da provjeri jedinstvenost niza u bazi, i zatim odobrava login tom korisniku
     public function register() {
         $sequence = $_GET['niz'];
         $as = new AuthService();
@@ -108,6 +119,7 @@ class AuthsController extends BaseController {
             $this->registry->template->show('auths_index');
         }
     }
+    //brise iz evidencije korisnika, vraca na login.
     public function logout() {
         unset($_SESSION['username']);
         unset($_SESSION['current_user_id']);

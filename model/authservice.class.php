@@ -1,5 +1,6 @@
 <?php
 class AuthService {
+    //iz baze vraca dio podataka za korisnika po korisnickom imenu ako postoji, false inace
     public function getPartialUserByUserName() {
         $db = DB::getConnection();
 
@@ -16,6 +17,8 @@ class AuthService {
         $row = $vt->fetch();
         return $row;
     }
+    //provjerava dali postoji postoji korisnik u bazi i vraca bool u ovisnosti
+    //
     public function checkIfUsernameExists() {
         $db = DB::getConnection();
 
