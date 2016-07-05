@@ -1,13 +1,13 @@
 <?php require_once '_header.php'; ?>
 <div class="title">
-    <h1>Prodaj dionicu <?= $firm_name?></h1>
+    <h1>Sell stock <?= $firm_name?></h1>
 </div>
 
 <div class="content">
     <p>
 
 <form method="post" action="<?php echo __SITE_URL . '/index.php?rt=stocks/prodaj'?>"
-<label for="user">Iznos za Prodati:</label>
+<label for="user">Amount to sell:</label>
 <input type="text" id="amount" name="amount">
 <input type="hidden" name="firm_id" value="<?=$firm_id?>">
 <br/>

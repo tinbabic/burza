@@ -14,12 +14,12 @@
 		</div>
 		<div class="menu">
 		<ul>
-			<li><a href="<?php echo __SITE_URL; ?>/index.php?rt=users">Portfolio korisnika</a></li>
-                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=stocks">Kupnja i prodaja</a></li>
-			<li><a href="<?php echo __SITE_URL; ?>/index.php?rt=saldos">Saldo korisnika</a></li>
-                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=transactions">Transakcije</a></li>
-                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=users/showAllUsers">Top korisnici</a></li>
-                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=auths/logout">Odjavi se</a></li>
+			<li><a href="<?php echo __SITE_URL; ?>/index.php?rt=users">Portfolio</a></li>
+                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=stocks">Trade stocks</a></li>
+			<li><a href="<?php echo __SITE_URL; ?>/index.php?rt=saldos">Saldo</a></li>
+                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=transactions">Transactions</a></li>
+                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=users/showAllUsers">Top users</a></li>
+                        <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=auths/logout">Logout</a></li>
 		</ul>
                 </div>
 	</div>

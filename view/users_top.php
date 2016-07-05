@@ -1,7 +1,7 @@
 
 <?php require_once '_header.php'; ?>
 <div class="title">
-    <h1>Popis najuspješnijih korisnika</h1>
+    <h1>Top users</h1>
 </div>
 
 <div class="content">
@@ -10,8 +10,8 @@
 <table>
     <tr>
         <th>#</th>
-        <th>Ime</th>
-        <th>Neto Vrijednost</th>
+        <th>Name</th>
+        <th>Net Worth</th>
     </tr>
 <?php
 $i=0;

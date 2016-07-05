@@ -1,6 +1,6 @@
 <?php require_once '_header.php'; ?>
 <div class="title">
-    <h1>Korisnik <?=$_SESSION['username']?></h1>
+    <h1>User: <?=$_SESSION['username']?></h1>
 </div>
 
 <div class="content">

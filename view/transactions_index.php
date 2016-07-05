@@ -1,7 +1,7 @@
 <?php require_once '_header.php'; ?>
 
 <div class="title">
-    <h1>Popis Transakcija za korisnika: <?=$_SESSION['username']?></h1>
+    <h1>All transactions of : <?=$_SESSION['username']?></h1>
 </div>
 
 <div class="content">

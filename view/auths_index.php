@@ -28,7 +28,7 @@
                     <td></td>
                     <td><input type="submit" name="login" value="Login"></td>
 </form>
-Ako nemate racun, <a href="<?php echo __SITE_URL . '/index.php?rt=auths/validate_register'?>">registrirajte</a> se.
+If you don't have an account, <a href="<?php echo __SITE_URL . '/index.php?rt=auths/validate_register'?>">register here</a>.
 <?php
 if(isset($error_msg)) {
     echo $error_msg;

@@ -1,6 +1,6 @@
 <?php require_once '_header.php'; ?>
 <div class="title">
-    <h1>Popis Firmi</h1>
+    <h1>List of firms</h1>
 </div>
 <div class="content">
     <p>
@@ -10,8 +10,8 @@ $i = 0;
 <table>
     <tr>
         <th>#</th>
-        <th>Simbol</th>
-        <th>Ime</th>
+        <th>Symbol</th>
+        <th>Name</th>
     </tr>
 <?php
 foreach($firms as $firm) {
