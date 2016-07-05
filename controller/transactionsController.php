@@ -2,6 +2,7 @@
 
 
 class TransactionsController extends BaseController {
+    //prikazuje sve transakcije za za izlistavanje u view-u
     public function index() {
         $user_id = $_SESSION['current_user_id'];
         $se = new Service();
