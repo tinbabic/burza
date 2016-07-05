@@ -14,9 +14,8 @@
     //dohvaca popis firma, promjeni per page na max do 100 da dohvatis max 100 firmi
     $json_string=file_get_contents('https://www.quandl.com/api/v3/datasets.json?database_code=WIKI&per_page=2&sort_by=id&page=1&api_key=eXH7ZKvysR6xus4NxGSi');
     $arr = json_decode($json_string, TRUE);
-    //print_r($arr['datasets']);
 
-    
+    //za svaku firmu upisujem u bazu
     foreach($arr['datasets'] as $dataset) {
         $code = $dataset['dataset_code'];
         echo $code . ' - dataset_code<br>';
@@ -31,7 +30,7 @@
             $st->execute();
         }catch( PDOException $e ) { echo 'Greška:' . $e->getMessage(); return; }
         
-        //dohvati iz baze id firme!!!
+        //dohvati iz baze id firme
         try{
             $st= $db->prepare("SELECT id FROM firms WHERE symbol='".$code."'"); 
             $st->execute();
@@ -39,7 +38,7 @@
         $firm_id=$st->fetch();
         echo $firm_id[0] . ' firm_id<br>';
         
-        //dohvaca sve informacije o svakoj firmi
+        //dohvaca sve informacije o svakoj firmi tj povijest
         $json_string=file_get_contents('https://www.quandl.com/api/v3/datasets/WIKI/'.$code.'.json?api_key=eXH7ZKvysR6xus4NxGSi');
         $tmp = json_decode($json_string, TRUE);
         
@@ -54,7 +53,7 @@
             if($data[4] != NULL) {
                 echo $data[0].': '.$data[4].'<br>';
                 
-                //
+                //unesi u bazu, ali i provjerava da li postoji taj unos
                 try{
                     $st = $db->prepare( "INSERT INTO stocks (firm_id, date, price, volume, dividend)
                     SELECT * FROM (SELECT '".$firm_id[0]."', '".$data[0]."', '".$data[4]."', '".$data[5]."', '".$data[6]."') AS tmp

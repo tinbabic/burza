@@ -16,13 +16,10 @@ $symbolArr=$st->fetchAll();
 
 $dividendArr = array();
 
-//zapis u stocks
+//dohvaća iz api-a povijest i zapisuje u stock
 foreach($symbolArr as $symbol){
-    //echo "<br>simbol ".$symbol[0];
     $json_string=file_get_contents('https://www.quandl.com/api/v3/datasets/WIKI/'.$symbol[0].'.json?api_key=eXH7ZKvysR6xus4NxGSi');
     $tmp = json_decode($json_string, TRUE);
-    //echo '<br>name: '.$tmp['dataset']['name'].'<br>';
-    //echo 'datum: '.$tmp['dataset']['data'][0][0].'<br>';
     
     $se = new Service();
     $lastest = $se->getStocksByFirmIdLastest($symbol[1]);
@@ -51,7 +48,6 @@ foreach($dividendArr as $firm => $dividend){
         $firmId = $saldo['firm_id'];
         //provjeri firm_id==firm
         if($firmId == $firm){
-            //u users(user_id) money+=dividend*amount i zapis u users
             $user = $se->getUsersById($saldo['user_id']);
             $user['money'] += $dividend * $saldo['total_amount'];
             $se->insertUser($user);
