@@ -11,7 +11,7 @@ var svgWidth = 960+120;
 var svgHeight = 700;
 
 var linechartHeight = 400;
-var margin = {top: 20, right: 20+120, bottom: 30, left: 50};
+var margin = {top: 20, right: 20+120, bottom: 30, left: 70};
     //TO DO
     
     width = svgWidth - margin.left - margin.right,

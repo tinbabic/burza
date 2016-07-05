@@ -16,6 +16,7 @@ table {
 }
 table, th, td {border: solid 1px; padding: 5px;}
 .login td, .login{border: none;}
+svg{background: none; background-color: white; padding-left: 60px;}
 /*--------------------------------------- unsorted classes --------------------------------------*/
 
 .mar-bottom { margin-bottom:50px; }
