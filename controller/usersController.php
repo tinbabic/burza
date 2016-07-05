@@ -68,7 +68,7 @@ class UsersController extends BaseController {
             }
             $list[$user->username] = $userNetWorth;
         }
-        
+        arsort($list);
         $this->registry->template->userList = $list;
             
         //skripta za ispis
