@@ -7,8 +7,6 @@ class UsersController extends BaseController {
     {
         //čita iz sessiona o kojem se korisniku radi
 
-        //iz sessiona nekak izvuc id usera <--------------
-
         $user_id = $_SESSION['current_user_id'];
         $se = new Service();
         $userSaldos = $se->getSaldosByUserId($user_id);
@@ -22,9 +20,28 @@ class UsersController extends BaseController {
         //novac
         $user = $se->getUsersById($user_id);
         $money = $user->money;
+        
+        //rank
+        $rank=1;
+        $userList = $se->getAllUsers();
+        foreach($userList as $usert){
+            $userSaldo = $se->getSaldosByUserId($usert->id);
+            $userNetWorth = $usert->money;
+            
+            //vrijednost dionica
+            foreach ($userSaldo as $saldo){
+                $firm = $saldo->firm_id;
+                $stock = $se->getStocksByFirmIdLastest($firm);
+                $userNetWorth = $userNetWorth + $stock->price * $saldo->total_amount;
+            }
+            if($userNetWorth > $user->money+$stockSum){
+                $rank++;
+            }
+        }
 
         $this->registry->template->money = $money;
         $this->registry->template->stockSum = $stockSum;
+        $this->registry->template->rank = $rank;
 
         //pozovi view skriptu za ispis (money, stockSum)
         $this->registry->template->show('users_index');
