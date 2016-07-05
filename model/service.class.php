@@ -2,6 +2,8 @@
 
 class Service {
     //---------------users--------------------------
+
+    //funkcija dihvaca korisnika iz baze po dobivenom id-u
     function getUsersById($id){
         try{
             $db = DB::getConnection();
@@ -17,7 +19,8 @@ class Service {
             return new User( $row['id'], $row['username'], $row['email'], $row['money'] );
         }
     }
-    
+
+    //funkcija vraća sve usere iz baze kao niz
     function getAllUsers(){
         try{
             $db = DB::getConnection();
@@ -32,7 +35,7 @@ class Service {
         
         return $arr;
     }
-    
+    //unosi novog usera ako ne postoji, ako postoji, editira postojece podatke
     function insertUser($user){
         if(is_a($user, 'User')){
             //prebroji usere sa username
@@ -64,6 +67,7 @@ class Service {
         }        
     }
     //---------------firms--------------------------
+    //dohvaca firmu iz baze po njezinom id-u
     function getFirmsById($id){
         try{
             $db = DB::getConnection();
@@ -79,7 +83,7 @@ class Service {
             return new Firm( $row['id'], $row['symbol'], $row['name'] );
         }
     }
-    
+    //dohvaca firmu iz baze po njezinom simbolu
     function getFirmsBySymbol($symbol){
         try{
             $db = DB::getConnection();
@@ -95,7 +99,8 @@ class Service {
             return new Firm( $row['id'], $row['symbol'], $row['name'] );
         }
     }
-    
+
+    //dohvaca sve firme iz baze i vraca kao niz
     function getAllFirms(){
         try{
             $db = DB::getConnection();
@@ -112,6 +117,7 @@ class Service {
     }
     
     //---------------transactions--------------------------
+    //dohvaca transakciju iz baze po id-u
     function getTransactionsById($id){
         try{
             $db = DB::getConnection();
@@ -127,7 +133,7 @@ class Service {
             return new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'],  $row['date']);
         }
     }
-    
+    //dohvaca transakcije iz baze po idu korisnika i vraca kao niz
     function getTransactionsByUserId($user_id){
         try{
             $db = DB::getConnection();
@@ -142,7 +148,8 @@ class Service {
         
         return $arr;
     }
-    
+
+    //varaca sve transakcije iz baze kao niz
     function getAllTransactions(){
         try{
             $db = DB::getConnection();
@@ -157,7 +164,7 @@ class Service {
         
         return $arr;
     }
-    
+    //unosi transakciju u bazu
     function insertTransaction($transaction){
         if(is_a($transaction, 'Transaction')){
             try{
@@ -172,6 +179,7 @@ class Service {
     }
     
     //---------------stocks--------------------------
+    //dohvaca dionicu iz baze po id-u
     function getStocksById($id){
         try{
             $db = DB::getConnection();
@@ -187,7 +195,7 @@ class Service {
             return new Stock( $row['id'], $row['firm_id'], $row['date'], $row['price'], $row['volume'], $row['dividend'] );
         }
     }
-    
+    //dohvaca sve dionice za pojedinu firmu po njezinom id-u kao niz
     function getStocksByFirmId($firm_id){
         try{
             $db = DB::getConnection();
@@ -202,7 +210,7 @@ class Service {
         
         return $arr;
     }
-    
+    //najnoviju dionicu po datumu vraca za firmu ciji je id
     function getStocksByFirmIdLastest($firm_id){
         try{
             $db = DB::getConnection();
@@ -218,7 +226,8 @@ class Service {
             return new Stock( $row['id'], $row['firm_id'], $row['date'], $row['price'], $row['volume'], $row['dividend'] );
         }
     }
-    
+
+    //-||- kao gore samo predzadnju
     function getStocksByFirmId2ndLastest($firm_id){
         try{
             $db = DB::getConnection();
@@ -236,6 +245,7 @@ class Service {
     }
     
     //---------------saldos--------------------------
+    //dohvaca za sve korisnike iznose dionica kao niz
     function getAllSaldos(){
         try{
             $db = DB::getConnection();
@@ -250,7 +260,7 @@ class Service {
         
         return $arr;
     }
-    
+    //dohvaca korisnikov saldo po id-u
     function getSaldosById($id){
         try{
             $db = DB::getConnection();
@@ -266,7 +276,7 @@ class Service {
             return new Saldo( $row['id'], $row['user_id'], $row['firm_id'], $row['total_amount'] );
         }
     }
-    
+    //dohvaca sve moguce iznose dionica za danog korisnika
     function getSaldosByUserId($user_id){
         try{
             $db = DB::getConnection();
@@ -281,7 +291,7 @@ class Service {
         
         return $arr;
     }
-    
+    //dohvaca iznose dionica preko id-a firme kao niz
     function getSaldosByFirmId($firm_id){
         try{
             $db = DB::getConnection();
@@ -296,7 +306,8 @@ class Service {
         
         return $arr;
     }
-    
+
+    //ukoliko za dani saldo vec postoji u bazi unos, mjenja ga, ako ne postoji, kreira novi
     function insertSaldo($saldo)
     {
         if (is_a($saldo, 'Saldo')) {

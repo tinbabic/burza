@@ -2,6 +2,8 @@
 
 
 class StocksController extends BaseController {
+    //dohvacamo podatke o firmama i dionicama kako bi dionce mogli ispisati sa
+    //imenom firme jer je tako ljepse u viewu
     public function index() {
         $se = new Service();
         $firms = $se->getAllFirms();
@@ -25,7 +27,7 @@ class StocksController extends BaseController {
     public function showPriceHistory(){
         $se = new Service();
         
-        //$_GET['firm_id']
+
         if(isset($_GET['firm_id'])){
             $firm_id = $_GET['firm_id'];
             //$firm_id = 9224;
@@ -71,6 +73,13 @@ class StocksController extends BaseController {
         }
         
     }
+    //kupi je glavna funkcija za kupovanje i drzanje konzistentnim svih podatka u bazi
+    //oko kupnje dionica
+    //funkciju pozivamo sa dva nacina, preko post forme (kada zbilja kupujemo, i preko geta /linka
+    // kada samo ucitava formu za kupnju.
+    //1. funckija kad samo ucitava formu salje samo ime firme ciju dionicu kupujemo za view
+    //2. kada se poziva iz forme preko post zahtjeva (tj saljemo podatke bitne za kupnju
+    
     public function kupi() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $amount = $_POST['amount'];

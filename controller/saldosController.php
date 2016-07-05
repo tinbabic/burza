@@ -2,7 +2,8 @@
 
 
 class SaldosController extends BaseController {
-    //
+    //dohvaca sve dionice za trenutno logiranog korisnika i za njih nalazi imena firmi
+    //salje ih viewu na prikazivanje
     public function index() {
         $se = new Service();
         $user_id = $_SESSION['current_user_id'];
