@@ -84,7 +84,7 @@ class StocksController extends BaseController {
             if($amount*$price <= $money) {
                 $money -= $amount*$price;
                 $user->money = $money;
-                $transaction = new Transaction(NULL,$stock->id,$user_id,$amount,1);
+                $transaction = new Transaction(NULL,$stock->id,$user_id,$amount,1,NULL);
                 $saldos = $se->getSaldosByUserId($user_id);
                 $found_saldo = NULL;
                 foreach($saldos as $saldo) {
@@ -144,7 +144,7 @@ class StocksController extends BaseController {
 
                     $money += $amount * $price;
                     $user->money = $money;
-                    $transaction = new Transaction(NULL, $stock->id, $user_id, $amount, 0);
+                    $transaction = new Transaction(NULL, $stock->id, $user_id, $amount, 0, NULL);
                     $found_saldo->total_amount -= $amount;
                     $se->insertSaldo($found_saldo);
                     $se->insertUser($user);

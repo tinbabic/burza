@@ -115,7 +115,7 @@ class Service {
     function getTransactionsById($id){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, stock_id, user_id, amount, buying FROM transactions WHERE id=:id' );
+            $st = $db->prepare( 'SELECT id, stock_id, user_id, amount, buying, date FROM transactions WHERE id=:id' );
             $st->execute( array( 'id' => $id ) );
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -124,20 +124,20 @@ class Service {
             return null;
         }
         else{
-            return new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'] );
+            return new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'],  $row['date']);
         }
     }
     
     function getTransactionsByUserId($user_id){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, stock_id, user_id, amount, buying FROM transactions WHERE user_id=:user_id ORDER BY id' );
+            $st = $db->prepare( 'SELECT id, stock_id, user_id, amount, buying, date FROM transactions WHERE user_id=:user_id ORDER BY id' );
             $st->execute( array( 'user_id' => $user_id ) );
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 	$arr = array();
         while($row=$st->fetch()){
-            $arr[] = new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'] );
+            $arr[] = new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'], $row['date'] );
         }
         
         return $arr;
@@ -146,13 +146,13 @@ class Service {
     function getAllTransactions(){
         try{
             $db = DB::getConnection();
-            $st = $db->prepare( 'SELECT id, stock_id, user_id, amount, buying FROM transactions ORDER BY id' );
+            $st = $db->prepare( 'SELECT id, stock_id, user_id, amount, buying, date FROM transactions ORDER BY id' );
             $st->execute();
 	}catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 	$arr = array();
         while($row=$st->fetch()){
-            $arr[] = new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'] );
+            $arr[] = new Transaction( $row['id'], $row['stock_id'], $row['user_id'], $row['amount'], $row['buying'], $row['date'] );
         }
         
         return $arr;
@@ -162,10 +162,10 @@ class Service {
         if(is_a($transaction, 'Transaction')){
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("INSERT INTO transactions (stock_id, user_id, amount, buying) "
-                        . "VALUES (".$transaction->stock_id.",".$transaction->user_id.",".$transaction->amount.",".$transaction->buying.")");
+                $st = $db->prepare("INSERT INTO transactions (stock_id, user_id, amount, buying, date) "
+                        . "VALUES (".$transaction->stock_id.",".$transaction->user_id.",".$transaction->amount.",".$transaction->buying.",".$transaction->date.")");
                 $st->execute();
-            }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+            }catch( PDOException $e ) { exit( 'PDO error insertTransaction ' . $e->getMessage() ); }
         }else{
             exit('expected variable is not Transaction');
         }
