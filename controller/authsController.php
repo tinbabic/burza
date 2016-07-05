@@ -59,7 +59,7 @@ class AuthsController extends BaseController {
     }
     //funkcija se poziva sa auth_register viewa kako bi procesirala
     //podatke unesene u formu
-    //prvo provjerava format onesenih podataka i ako su dobri, provjerava ako postoji korinik sa tim podacima u bazi
+    //prvo provjerava format unesenih podataka i ako su dobri, provjerava ako postoji korisnik sa tim podacima u bazi
     //ako postoji, javlja da postoji i salje nazad na login.
     //ako ne postoji, stvara jedinstveni niz za korisnika i posalje mu na mail link za registraciju te vraca na login
     public function validate_register() {
@@ -92,8 +92,8 @@ class AuthsController extends BaseController {
                 $subject = 'Registration e-mail';
                 $message = 'Dear user ' . $_POST['username'] . "!\nTo complete registration click on the link below: ";
                 $message .= 'http://' . $_SERVER['SERVER_NAME'] . __SITE_URL . '/index.php?rt=auths/register&niz=' . $reg_seq . "\n";
-                $headers = 'From: admin@tradecity.hr' . "\r\n" .
-                    'Reply-To: admin@tradecity.hr' . "\r\n" .
+                $headers = 'From: admin@mydailymarket.hr' . "\r\n" .
+                    'Reply-To: admin@mydailymarket.hr' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
 
                 $isOK = mail($to, $subject, $message, $headers);
