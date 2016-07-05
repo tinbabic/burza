@@ -9,6 +9,8 @@
     <div><p>Change</p><p><?php echo $changePrevious;?></p></div>
     <div><p>7 days low</p><p><?php echo $low;?></p></div>
     <div><p>7 days high</p><p><?php echo $high;?></p></div>
+    <div><p>Ex dividend date</p><p><?php echo $exDivDate;?></p></div>
+    <div><p>Dividend</p><p><?php echo $dividend;?></p></div>
 </div>
         
 <?php

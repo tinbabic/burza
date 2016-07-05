@@ -35,7 +35,13 @@ class StocksController extends BaseController {
 
             $arr = $se->getStocksByFirmId($firm_id);
             $data = array();
+            $dividend = NULL;
+            $exDivDate = NULL;
             foreach($arr as $stock){
+                if($stock->dividend !== 0 && $dividend !== NULL){
+                    $dividend = $stock->dividend;
+                    $exDivDate = $stock->date;
+                }
                 $data[$stock->date] = array($stock->price, $stock->volume, $stock->dividend);
             }
             $low = $arr[0]->price;
@@ -56,6 +62,8 @@ class StocksController extends BaseController {
             $this->registry->template->changePrevious = $changePrevious;
             $this->registry->template->low = $low;
             $this->registry->template->high = $high;
+            $this->registry->template->dividend = $dividend;
+            $this->registry->template->exDivDate = $exDivDate;
             
             
 
