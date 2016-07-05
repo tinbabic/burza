@@ -7,7 +7,12 @@
 </head>
 <body>
 
-	<nav>
+	<div class="header-wrap">
+	<div class="header">
+		<div class="logo">
+			<h1>MDM</h1>
+		</div>
+		<div class="menu">
 		<ul>
 			<li><a href="<?php echo __SITE_URL; ?>/index.php?rt=users">Portfolio korisnika</a></li>
                         <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=stocks">Kupnja i prodaja</a></li>
@@ -16,4 +21,17 @@
                         <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=users/showAllUsers">Top korisnici</a></li>
                         <li><a href="<?php echo __SITE_URL; ?>/index.php?rt=auths/logout">Odjavi se</a></li>
 		</ul>
-	</nav>
+                </div>
+	</div>
+</div>
+
+<div class="wrap">
+    <div class="leftcol">
+    <div class="block">
+    </div>
+    </div>
+
+    
+<div class="rightcol">
+    <div class="page-content">
+        <div class="panel mar-bottom">

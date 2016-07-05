@@ -1,7 +1,11 @@
 <?php require_once '_header.php'; ?>
 
+<div class="title">
+    <h1>Popis Transakcija za korisnika: <?=$_SESSION['username']?></h1>
+</div>
 
-<h2>Popis Transakcija za korisnika: <?=$_SESSION['username']?></h2>
+<div class="content">
+    <p>
 <?php
 $i = 0;
 ?>
@@ -25,5 +29,6 @@ foreach($transactions as $transaction) {
     }
     ?>
 </table>
-
+</p>
+</div>
 <?php require_once '_footer.php'; ?>

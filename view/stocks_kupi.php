@@ -1,6 +1,9 @@
 <?php require_once '_header.php'; ?>
-
-<h2>Kupi dionicu <?= $firm_name?></h2>
+<div class="title">
+    <h1>Kupi dionicu <?= $firm_name?></h1>
+</div>
+<div class="content">
+    <p>
 <form method="post" action="<?php echo __SITE_URL . '/index.php?rt=stocks/kupi'?>"
 <label for="user">Iznos za Kupiti:</label>
 <input type="text" id="amount" name="amount">
@@ -13,5 +16,7 @@ if(isset($error_msg)) {
     echo $error_msg;
 }
 ?>
+</p>
+</div>
 <?php require_once '_footer.php'; ?>
 

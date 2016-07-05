@@ -17,7 +17,11 @@
     }
 </style>
 
-<h2> Stock history of <?php echo $name;?></h2>
+<div class="title">
+    <h1>Stock history of <?php echo $name;?></h1>
+</div>
+<div class="content">
+    <p>
 
 <div id="stockDiv">
     <p id="bigPrice"><?php echo $newPrice;?></p>
@@ -28,7 +32,7 @@
     <div><p>Ex dividend date</p><p><?php echo $exDivDate;?></p></div>
     <div><p>Dividend</p><p><?php echo $dividend;?></p></div>
 </div>
-        
+
 <?php
     echo '<script> var dataset = [';
     $lastKey = end(array_keys($dataset));
@@ -39,8 +43,13 @@
         }
     }
     echo ']</script>';
-
-    require_once '_footer.php';
 ?>
+    
+
 
 <script>drawChart();</script>
+
+</p>
+</div>
+
+<?php require_once '_footer.php';?>

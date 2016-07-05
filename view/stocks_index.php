@@ -1,6 +1,12 @@
 <?php require_once '_header.php'; ?>
 
-<h2>Popis svih dionica za najnoviji datum</h2>
+
+<div class="title">
+    <h1>Popis svih dionica za najnoviji datum</h1>
+</div>
+
+<div class="content">
+    <p>
 <?php
 $i = 0;
 ?>
@@ -33,5 +39,6 @@ foreach($firms_and_stocks as $element) {
     }
     ?>
 </table>
-
+</p>
+</div>
 <?php require_once '_footer.php'; ?>

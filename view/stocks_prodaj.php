@@ -1,6 +1,11 @@
 <?php require_once '_header.php'; ?>
+<div class="title">
+    <h1>Prodaj dionicu <?= $firm_name?></h1>
+</div>
 
-<h2>Prodaj dionicu <?= $firm_name?></h2>
+<div class="content">
+    <p>
+
 <form method="post" action="<?php echo __SITE_URL . '/index.php?rt=stocks/prodaj'?>"
 <label for="user">Iznos za Prodati:</label>
 <input type="text" id="amount" name="amount">
@@ -13,5 +18,8 @@ if(isset($error_msg)) {
     echo $error_msg;
 }
 ?>
+    
+</p>
+</div>
 <?php require_once '_footer.php'; ?>
 

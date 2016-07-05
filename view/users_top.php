@@ -1,8 +1,11 @@
 
 <?php require_once '_header.php'; ?>
+<div class="title">
+    <h1>Popis najuspješnijih korisnika</h1>
+</div>
 
-
-<h2>Popis najuspješnijih korisnika</h2>
+<div class="content">
+    <p>
 
 <table>
     <tr>
@@ -22,5 +25,6 @@ foreach($userList as $user => $netWorth) {
     ?>
 </table>
 
-
+</p>
+</div>
 <?php require_once '_footer.php'; ?>

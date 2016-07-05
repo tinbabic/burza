@@ -1,6 +1,11 @@
 <?php require_once '_header.php'; ?>
+<div class="title">
+    <h1>Korisnik <?=$_SESSION['username']?></h1>
+</div>
 
-    <h2>Korisnik <?=$_SESSION['username']?></h2>
+<div class="content">
+    <p>
+
     <table>
         <tr>
             <th> Rank </th>
@@ -20,5 +25,6 @@
            
         </tr>
     </table>
-    
+</p>
+</div>
 <?php require_once '_footer.php'; ?>
