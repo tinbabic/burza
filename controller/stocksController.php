@@ -38,9 +38,26 @@ class StocksController extends BaseController {
             foreach($arr as $stock){
                 $data[$stock->date] = array($stock->price, $stock->volume, $stock->dividend);
             }
+            $low = $arr[0]->price;
+            $high = $arr[0]->price;
+            $newPrice = $arr[0]->price;
+            $lastPrice = $arr[1]->price;
+            $changePrevious = $lastPrice - $newPrice;
+            
+            for($i=0; $i<7; $i++){
+                if($arr[$i]->price < $low) { $low=$arr[$i]->price;}
+                if($arr[$i]->price > $high) { $high=$arr[$i]->price;}
+            }
 
             $this->registry->template->data = $data;
             $this->registry->template->name = $name;
+            $this->registry->template->newPrice = $newPrice;
+            $this->registry->template->lastPrice = $lastPrice;
+            $this->registry->template->changePrevious = $changePrevious;
+            $this->registry->template->low = $low;
+            $this->registry->template->high = $high;
+            
+            
 
             $this->registry->template->show('stock_history');
         }
