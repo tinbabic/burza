@@ -27,7 +27,8 @@ foreach($firms_and_stocks as $element) {
     <td>' . $element['stock']->dividend .'</td>
     <td> <a href="' .  __SITE_URL  . '/index.php?rt=stocks/showPriceHistory&firm_id=' . $element['stock']->firm_id .'">Povijest</a>
         <a href="' .  __SITE_URL  . '/index.php?rt=stocks/kupi&firm_id=' . $element['firm']->id .'&firm_name=' . $element['firm']->name .'">
-        Kupi</a> Prodaj</td></tr>' ?>
+        Kupi</a> <a href="' .  __SITE_URL  . '/index.php?rt=stocks/prodaj&firm_id=' . $element['firm']->id .'&firm_name=' . $element['firm']->name .'">
+        Prodaj</a></td></tr>' ?>
     <?php
     }
     ?>

@@ -13,7 +13,7 @@ $i = 0;
 foreach($userStocks as $user_stock) {
     $i++;?>
     <?= '<tr><td>' . $i . '</td>
-    <td>' . $firm_names[$user_stock->stock_id] . '</td>
+    <td>' . $firm_names[$user_stock->firm_id] . '</td>
     <td>' . $user_stock->total_amount . '</td></tr>' ?>
     <?php
     }
