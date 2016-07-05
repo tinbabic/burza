@@ -25,7 +25,7 @@
     <table>
         <tr><th>Price</th> <th>Previous price</th> <th>Change</th> <th>7 days low</th> <th>7 days high</th> <th>Ex dividend date</th> <th>Dividend</th></tr>
         <tr><td><?php echo $newPrice;?></td> <td><?php echo $lastPrice;?></td> <td><?php echo $changePrevious;;?></td> <td><?php echo $low;?></td> <td><?php echo $high;?></td> <td><?php echo $exDivDate;?></td> <td><?php echo $dividend;?></td></tr>
-    </table>
+    </table> <br>
 
 <?php
     echo '<script> var dataset = [';
