@@ -162,8 +162,8 @@ class Service {
         if(is_a($transaction, 'Transaction')){
             try{
                 $db = DB::getConnection();
-                $st = $db->prepare("INSERT INTO transactions (stock_id, user_id, amount, buying, date) "
-                        . "VALUES (".$transaction->stock_id.",".$transaction->user_id.",".$transaction->amount.",".$transaction->buying.",".$transaction->date.")");
+                $st = $db->prepare("INSERT INTO transactions (stock_id, user_id, amount, buying) "
+                        . "VALUES (".$transaction->stock_id.",".$transaction->user_id.",".$transaction->amount.",".$transaction->buying.")");
                 $st->execute();
             }catch( PDOException $e ) { exit( 'PDO error insertTransaction ' . $e->getMessage() ); }
         }else{

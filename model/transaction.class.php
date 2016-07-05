@@ -10,7 +10,7 @@ class Transaction {
                 $this->user_id = $user_id;
                 $this->amount = $amount;
                 $this->buying = $buying;
-                $this->buying = $date;
+                $this->date = $date;
     }
     function __get( $prop ) { return $this->$prop; }
     function __set( $prop, $val ) { $this->$prop = $val; return $this; }

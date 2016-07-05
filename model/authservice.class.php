@@ -18,7 +18,7 @@ class AuthService {
         return $row;
     }
     //provjerava dali postoji postoji korisnik u bazi i vraca bool u ovisnosti
-    //
+    //true ako postoji, flase inace
     public function checkIfUsernameExists() {
         $db = DB::getConnection();
 
@@ -36,6 +36,7 @@ class AuthService {
         }
         return false;
     }
+    //dodaje korisnika sa zadanim usernamom, passwordom mailom i registracijskim nizom
     public function addUser($username, $password, $email, $reg_seq) {
         $db = DB::getConnection();
         try {
@@ -49,8 +50,8 @@ class AuthService {
         } catch (PDOException $e) {
             exit('Error' . $e->getMessage());
         }
-
     }
+    //provjerava postoji li vise od jednog niza u bazi korisnika, ako da, vraca false, ako ne, vraca true
     public function checkIfSequenceUnique($sequence) {
         $db = DB::getConnection();
         try
@@ -68,6 +69,7 @@ class AuthService {
         }
         return true;
     }
+    //mijenja korisnika sa nizom i dodjeljuje mu da se dozvoljava login
     public function updateUser($sequence) {
         $db = DB::getConnection();
         try
