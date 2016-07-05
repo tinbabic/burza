@@ -22,16 +22,10 @@
 </div>
 <div class="content">
     <p>
-
-<div id="stockDiv">
-    <p id="bigPrice"><?php echo $newPrice;?></p>
-    <div><p>Previous price</p><p><?php echo $lastPrice;?></p></div>
-    <div><p>Change</p><p><?php echo $changePrevious;?></p></div>
-    <div><p>7 days low</p><p><?php echo $low;?></p></div>
-    <div><p>7 days high</p><p><?php echo $high;?></p></div>
-    <div><p>Ex dividend date</p><p><?php echo $exDivDate;?></p></div>
-    <div><p>Dividend</p><p><?php echo $dividend;?></p></div>
-</div>
+    <table>
+        <tr><th>Price</th> <th>Previous price</th> <th>Change</th> <th>7 days low</th> <th>7 days high</th> <th>Ex dividend date</th> <th>Dividend</th></tr>
+        <tr><td><?php echo $newPrice;?></td> <td><?php echo $lastPrice;?></td> <td><?php echo $changePrevious;;?></td> <td><?php echo $low;?></td> <td><?php echo $high;?></td> <td><?php echo $exDivDate;?></td> <td><?php echo $dividend;?></td></tr>
+    </table>
 
 <?php
     echo '<script> var dataset = [';

@@ -26,10 +26,7 @@
 </div>
 
 <div class="wrap">
-    <div class="leftcol">
-    <div class="block">
-    </div>
-    </div>
+    
 
     
 <div class="rightcol">

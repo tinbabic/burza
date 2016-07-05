@@ -55,7 +55,7 @@ var formatDate = d3.timeFormat("%d-%b-%y");
     var key = function(d){ return d.key;};
     
     
-    var svg = d3.select("div.content").append("svg")
+    var svg = d3.select("body").append("svg")
             .attr("width", svgWidth)
             .attr("height", svgHeight)
             .append("g")
