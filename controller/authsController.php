@@ -3,7 +3,7 @@
 class AuthsController extends BaseController {
     public function index() {
         if(isset($_SESSION['username'])) {
-            $this->registry->template->show('auths_uspjeh');
+            header( 'Location: ' . __SITE_URL . '/index.php?rt=stocks' );
         }
         else {
             $this->registry->template->show('auths_index');
