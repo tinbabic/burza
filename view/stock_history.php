@@ -1,6 +1,22 @@
 <?php
     require_once '_header.php';?>
 
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="<?php echo __SITE_URL;?>/js/chart.js"></script>
+<style>
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 2px;
+      clip-path: url(#clip);
+    }
+    .brush .extent {
+      stroke: #fff;
+      fill-opacity: .125;
+      shape-rendering: crispEdges;
+    }
+</style>
+
 <h2> Stock history of <?php echo $name;?></h2>
 
 <div id="stockDiv">
@@ -14,9 +30,9 @@
 </div>
         
 <?php
-    echo '<script> var data = [';
-    $lastKey = end(array_keys($data));
-    foreach($data as $date=>$values){
+    echo '<script> var dataset = [';
+    $lastKey = end(array_keys($dataset));
+    foreach($dataset as $date=>$values){
         echo '{date:"'.$date.'", close:"'.$values[0].'",volume:"'.$values[1].'",dividend:"'.$values[2].'"}';
         if ($date != $lastKey) {
             echo ', ';
@@ -26,3 +42,5 @@
 
     require_once '_footer.php';
 ?>
+
+<script>drawChart();</script>
