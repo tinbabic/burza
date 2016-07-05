@@ -73,13 +73,14 @@ class StocksController extends BaseController {
         }
         
     }
-    //kupi je glavna funkcija za kupovanje i drzanje konzistentnim svih podatka u bazi
+    //kupi je glavna funkcija za kupovanje i drzanje konzistentnim svih podataka u bazi
     //oko kupnje dionica
-    //funkciju pozivamo sa dva nacina, preko post forme (kada zbilja kupujemo, i preko geta /linka
+    //funkciju pozivamo na dva nacina, preko post forme (kada zbilja kupujemo, i preko geta /linka
     // kada samo ucitava formu za kupnju.
-    //1. funckija kad samo ucitava formu salje samo ime firme ciju dionicu kupujemo za view
-    //2. kada se poziva iz forme preko post zahtjeva (tj saljemo podatke bitne za kupnju
-    
+    //1. funkcija kad samo ucitava formu salje samo ime firme ciju dionicu kupujemo za view
+    //2. kada se poziva iz forme preko post zahtjeva (tj. saljemo podatke bitne za kupnju
+    //   dionica) funkcija
+
     public function kupi() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $amount = $_POST['amount'];
@@ -90,18 +91,21 @@ class StocksController extends BaseController {
             $user_id = $_SESSION['current_user_id'];
             $user = $se->getUsersById($user_id);
             $money = $user->money;
+            // vidi ima li dovoljno novca
             if($amount*$price <= $money) {
-                $money -= $amount*$price;
+                $money -= $amount*$price;   // ako ima, optereti ga za pravi iznos
                 $user->money = $money;
                 $transaction = new Transaction(NULL,$stock->id,$user_id,$amount,1,NULL);
                 $saldos = $se->getSaldosByUserId($user_id);
                 $found_saldo = NULL;
+                // pronađi ako je korisnik već ranije kupovao iste dionice
                 foreach($saldos as $saldo) {
                     if($saldo->firm_id == $firm_id) {
                         $found_saldo = $saldo;
                         break;
                     }
                 }
+
                 if($found_saldo !== NULL) {
                     $found_saldo->total_amount += $amount;
                     $se->insertSaldo($found_saldo);
@@ -113,7 +117,7 @@ class StocksController extends BaseController {
                 $se->insertTransaction($transaction);
                 $this->index();
                 return;
-            } else {
+            } else {    // javi grešku, korisnik nema dovoljno novca
                 $this->registry->template->error_msg = "You don't have enough funds!";
                 $this->registry->template->firm_id = $firm_id;
                 $firm = $se->getFirmsById($firm_id);
@@ -121,7 +125,7 @@ class StocksController extends BaseController {
                 $this->registry->template->firm_name = $firm->name;
                 $this->registry->template->show('stocks_kupi');
             }
-        } else {
+        } else {    // korisnik došao na ovu stranicu preko linka s početne stranice
             $firm_id = $_GET['firm_id'];
             $firm_name = $_GET['firm_name'];
             $this->registry->template->firm_id = $firm_id;
@@ -129,6 +133,12 @@ class StocksController extends BaseController {
             $this->registry->template->show('stocks_kupi');
         }
     }
+    //prodaj je glavna funkcija za prodaju i drzanje konzistentnim svih podataka u bazi
+    //oko prodaje dionica
+    //funkciju pozivamo na dva nacina, preko post forme (kada zbilja prodajemo, i preko geta /linka
+    // kada samo ucitava formu za prodaju.
+    //1. funkcija kad samo ucitava formu salje samo ime firme ciju dionicu prodajemo za view
+    //2. kada se poziva iz forme preko post zahtjeva (tj. saljemo podatke bitne za kupnju
     public function prodaj() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $amount = $_POST['amount'];
@@ -161,7 +171,8 @@ class StocksController extends BaseController {
                     $this->index();
 
                 } else {
-                    $this->registry->template->error_msg = "You don't have enough funds!";
+                    //nema dovoljno dionica
+                    $this->registry->template->error_msg = "You don't have enough stocks!";
                     $this->registry->template->firm_id = $firm_id;
                     $firm = $se->getFirmsById($firm_id);
 
@@ -180,7 +191,7 @@ class StocksController extends BaseController {
                     $this->registry->template->show('stocks_prodaj');
                 }
             }
-        } else {
+        } else { //ako preko geta pozovemo za view
             $firm_id = $_GET['firm_id'];
             $firm_name = $_GET['firm_name'];
             $this->registry->template->firm_id = $firm_id;

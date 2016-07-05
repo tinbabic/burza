@@ -1,6 +1,8 @@
 <?php
 require_once 'Model/dbClass.php';
 session_start();
+//ovo je relic starog authentifikacijskog sustava koji je sada pretvoren u MVC auth ervice
+//vise se ne koristi
 
 
 /*
