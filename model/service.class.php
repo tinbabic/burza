@@ -43,7 +43,8 @@ class Service {
             } catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
             
             //ako ne postoji taj user unesi novi
-            if($st->fetch() == 0){
+            $tmo = $st->fetch();
+            if($tmo[0] == 0){
                 try{
                     $db = DB::getConnection();
                     $st = $db->prepare("INSERT INTO users (id, username, email, money, has_registered) "
@@ -296,32 +297,41 @@ class Service {
         return $arr;
     }
     
-    function insertSaldo($saldo){
-        if(is_a($saldo, 'Saldo')){
+    function insertSaldo($saldo)
+    {
+        if (is_a($saldo, 'Saldo')) {
             //prebroji usere sa username
-            try{
+            try {
                 $db = DB::getConnection();
-                $st = $db->prepare("SELECT EXISTS (SELECT * FROM saldos WHERE user_id = '".$saldo->user_id."'"
-                        . " AND firm_id = '".$saldo->firm_id."')");
+                $st = $db->prepare("SELECT EXISTS (SELECT * FROM saldos WHERE user_id = '" . $saldo->user_id . "'"
+                    . " AND firm_id = '" . $saldo->firm_id . "')");
                 $st->execute();
-            } catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-            
-            if($st->fetch() == 0){
-                try{
+            } catch (PDOException $e) {
+                exit('PDO error ' . $e->getMessage());
+            }
+            $tmo = $st->fetch();
+
+            if ($tmo[0] == 0) {
+                try {
                     $db = DB::getConnection();
                     $st = $db->prepare("INSERT INTO saldos (user_id, firm_id, total_amount) "
-                            . "VALUES (".$saldo->user_id.",".$saldo->firm_id.",".$saldo->total_amount.")");
+                        . "VALUES (" . $saldo->user_id . "," . $saldo->firm_id . "," . $saldo->total_amount . ")");
                     $st->execute();
-                }catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-            } else{
-                try{
+                } catch (PDOException $e) {
+                    exit('PDO error ' . $e->getMessage());
+                }
+            } else {
+                try {
                     $db = DB::getConnection();
-                    $st = $db->prepare("UPDATE saldos SET user_id='".$saldo->user_id."', firm_id='".$saldo->firm_id."', total_amount='".$saldo->total_amount."'
-                            WHERE user_id = '".$saldo->user_id."' AND firm_id = '".$saldo->firm_id."'");
+                    $st = $db->prepare("UPDATE saldos SET user_id='" . $saldo->user_id . "', firm_id='" . $saldo->firm_id . "', total_amount='" . $saldo->total_amount . "'
+                            WHERE user_id = '" . $saldo->user_id . "' AND firm_id = '" . $saldo->firm_id . "'");
                     $st->execute();
-                }catch( PDOException $e ) { exit( 'PDO1111 error ' . $e->getMessage() ); }
+                } catch (PDOException $e) {
+                    exit('PDO1111 error ' . $e->getMessage());
+                }
             }
-        }else{
+
+        } else {
             exit('expected variable is not Saldo');
         }
     }
