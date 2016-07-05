@@ -57,7 +57,7 @@ class StocksController extends BaseController {
                 if($arr[$i]->price > $high) { $high=$arr[$i]->price;}
             }
 
-            $this->registry->template->data = $data;
+            $this->registry->template->dataset = $data;
             $this->registry->template->name = $name;
             $this->registry->template->newPrice = $newPrice;
             $this->registry->template->lastPrice = $lastPrice;
