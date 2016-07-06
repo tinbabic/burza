@@ -54,6 +54,7 @@
                 echo $data[0].': '.$data[4].'<br>';
                 
                 //unesi u bazu, ali i provjerava da li postoji taj unos
+                /*
                 try{
                     $st = $db->prepare( "INSERT INTO stocks (firm_id, date, price, volume, dividend)
                     SELECT * FROM (SELECT '".$firm_id[0]."', '".$data[0]."', '".$data[4]."', '".$data[5]."', '".$data[6]."') AS tmp
@@ -61,7 +62,23 @@
                     SELECT firm_id, date FROM stocks WHERE firm_id = '".$firm_id[0]."' AND date='".$data[0]."'
                     ) LIMIT 1" );
                     $st->execute();
-                }catch( PDOException $e ) { echo 'Greška:' . $e->getMessage(); return; }
+                }catch( PDOException $e ) { echo 'Greška:' . $e->getMessage(); return; }*/
+                try{
+                    $db = DB::getConnection();
+                    $st = $db->prepare("SELECT EXISTS (SELECT * FROM stocks WHERE firm_id = '".$firm_id[0]."' AND date='".$data[0]."')");
+                    $st->execute();
+                } catch( PDOException $e ) { exit( 'PDO error select' . $e->getMessage() ); }
+
+                
+                $tmo = $st->fetch();
+                if($tmo[0] == 0){
+                    try{
+                        $db = DB::getConnection();
+                        $st = $db->prepare("INSERT INTO stocks (firm_id, date, price, volume, dividend) "
+                                . "VALUES ('".$firm_id[0]."', '".$data[0]."', '".$data[4]."', '".$data[5]."', '".$data[6]."')");
+                        $st->execute();
+                    }catch( PDOException $e ) { exit( 'PDO error insert ' . $e->getMessage() ); }
+                }
             }
         }
     }

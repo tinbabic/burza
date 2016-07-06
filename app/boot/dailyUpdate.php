@@ -3,6 +3,7 @@
 //spoji se na bazu
 require_once '../../model/db.class.php';
 
+require_once '../../model/stock.class.php';
 require_once '../../model/service.class.php';
 
 $db = DB::getConnection();
